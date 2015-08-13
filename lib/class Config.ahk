@@ -1,5 +1,6 @@
 class CConfig
 {
+	static flagList := "ejPressed|ejPrevState|fnPressed|fnPrevState|hidMessage|isSuspend|lctrlPressed|lctrlPrevState|pwrPressed|pwrPrevState"
 	Static RID_INPUT                := 0x10000003
 	Static RIDEV_INPUTSINK          := 0x00000100
 	Static RIDI_DEVICEINFO          := 0x2000000b
@@ -23,5 +24,21 @@ class CConfig
 		this.lctrlPrevState := 0
 		this.pwrPressed     := 0
 		this.pwrPrevState   := 0
+	}
+	
+	Reset() {
+		this.isSuspend := 0
+		SetTimer, SendDelete, On
+		Suspend, Off
+	}
+	
+	Suspend() {
+		for c, v in StrSplit(CConfig.flagList,"|")
+			this[c] := 0
+		Send, {Blind}{LControl Up}{RControl Up}
+		Send, {Blind}{LAlt Up}{RAlt Up}
+		this.isSuspend := 1
+		SetTimer, SendDelete, Off
+		Suspend, On
 	}
 }
