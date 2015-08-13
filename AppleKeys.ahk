@@ -4,7 +4,6 @@
 DetectHiddenWindows, On
 SetWorkingDir, %A_ScriptDir%
 
-
 global cfg:=new CConfig()
 
 TrayMenu()
