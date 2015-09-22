@@ -7,13 +7,12 @@ SetWorkingDir, %A_ScriptDir%
 global cfg:=new CConfig()
 
 TrayMenu()
+CheckUpdate()
 
 Gui, +ToolWindow +hwndHWND
 Gui, Show, x0 y0 h0 w0, AppleWKHelper
 
-Res := DllCall("GetRawInputDeviceList", UInt, 0, "UInt *", Count, UInt, cfg.SizeofRawInputDeviceList)
-VarSetCapacity(RawInputList, cfg.SizeofRawInputDeviceList * Count)
-Res := DllCall("GetRawInputDeviceList", UInt, &RawInputList, "UInt *", Count, UInt, cfg.SizeofRawInputDeviceList)
+Res:=DllCall("GetRawInputDeviceList",UInt,0,"UInt *",Count,UInt,cfg.SizeofRawInputDeviceList),VarSetCapacity(RawInputList,cfg.SizeofRawInputDeviceList*Count),Res:=DllCall("GetRawInputDeviceList",UInt,&RawInputList,"UInt *",Count,UInt,cfg.SizeofRawInputDeviceList)
 
 Loop %Count% {
 	Handle := NumGet(RawInputList, (A_Index-1)*cfg.SizeofRawInputDeviceList)
