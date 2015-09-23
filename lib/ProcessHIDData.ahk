@@ -23,6 +23,10 @@ ProcessHIDData(wParam, lParam) {
 				ExitApp
 			}
 		}
+		else if (GetKeyState("Ctrl")) {
+			Reload
+			Pause
+		}
 		else
 			pwrPressed:=1, CheckSuspend()
 	} 

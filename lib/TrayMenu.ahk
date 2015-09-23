@@ -1,9 +1,9 @@
 TrayMenu(hideDef:="") {
-	static Version
+	static Version, scrName, icoUrl
 	scrName := RegExReplace(A_ScriptName, "\.(ahk|exe)$")
 	icoUrl := "http://files.wsnhapps.com/AppleKeys/" (ico:=scrName ".ico")
+	susIcoUrl := "http://files.wsnhapps.com/AppleKeys/" scrName "-Suspend.ico"
 	;auto_version
-	
 	Menu, DefaultAHK, Standard
 	Menu, Tray, NoStandard
 	Menu, Tray, Add, Apple Keys: Enabled, MenuAction
@@ -16,13 +16,18 @@ TrayMenu(hideDef:="") {
 	Menu, Tray, Add, Reload, MenuAction
 	Menu, Tray, Add, Exit, MenuAction
 	
-	if (A_IsCompiled)
-		Menu, Tray, Icon, % A_ScriptFullpath, -159
-	else {
-		if (!FileExist(ico))
-			URLDownloadToFile, %icoUrl%, % (ico:=A_ScriptDir "\" scrName ".ico")
-		Menu, Tray, Icon, % FileExist(ico) ? ico : ""
+	;~ if (!FileExist(scrName "-Suspend.ico")) {
+		;~ URLDownloadToFile, %susIcoUrl%, % scrName "-Suspend.ico"
+		;~ if (ErrorLevel)
+		;~ FileDelete, % scrName "-Suspend.ico"
+		;~ }
+		if (A_IsCompiled)
+			Menu, Tray, Icon, % A_ScriptFullpath, -159
+		else {
+			if (!FileExist(ico))
+				URLDownloadToFile, %icoUrl%, % (ico:=A_ScriptDir "\" scrName ".ico")
+			Menu, Tray, Icon, % FileExist(ico) ? ico : ""
+		}
+		
+		Menu, Tray, Tip, % scrName (Version ? " v" Version:"") " Running..."
 	}
-	
-	Menu, Tray, Tip, % scrName " v" StrReplace(Version, "Version=") " is running..."
-}
