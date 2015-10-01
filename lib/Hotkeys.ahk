@@ -18,6 +18,15 @@ hotkeyAltF3() {
 		SendInput !{F3}
 }
 
+; fn+ctrl F3 = Ctrl+PrtScr
+$^F3::
+hotkeyCtrlF3() {
+	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+		SendInput ^{PrintScreen}
+	else 
+		SendInput ^{F3}
+}
+
 ; fn+F4 = Run TM
 $F4::
 hotkeyF4() {
@@ -47,9 +56,8 @@ hotkeyF8() {
 
 ; WinMPlayer: Next
 $F9::
-hotkeyF9()
-{
-	if (cfg.lctrlPressed = 1 && andcfg.ejPressed = 0)
+hotkeyF9() {
+	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
 		SendInput {Media_Next} ; Next
 	else
 		SendInput {F9}

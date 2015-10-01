@@ -1,3 +1,8 @@
+CheckForUpdate() {
+	if (!CheckUpdate())
+		m("No update found.", "i")
+}
+
 CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="", ByRef _Information:="") {
 	Static Update_URL  := "http://files.wsnhapps.com/AppleKeys/AppleKeys.text"
 		 , Download_URL := "http://files.wsnhapps.com/AppleKeys/AppleKeys.exe"

@@ -42,16 +42,16 @@ OnMessage(0x00FF, "InputMessage")
 return
 
 
-#Include lib\CheckSuspend.ahk
-#Include lib\CheckUpdate.ahk
-#Include lib\class Config.ahk
-#Include Lib\ExpandEnv.ahk
-#Include lib\GetMods.ahk
-#Include lib\Hotkeys.ahk
-#Include lib\InputMessage.ahk
-#Include lib\m.ahk
-#Include lib\Mem2Hex.ahk
-#Include lib\MenuAction.ahk
-#Include lib\ProcessHIDData.ahk
-#Include lib\ProcessModKeys.ahk
-#Include lib\TrayMenu.ahk
+#Include <CheckSuspend>
+#Include <CheckUpdate>
+#Include <class Config>
+#Include <ExpandEnv>
+#Include <GetMods>
+#Include <Hotkeys>
+#Include <InputMessage>
+#Include <m>
+#Include <Mem2Hex>
+#Include <MenuAction>
+#Include <ProcessHIDData>
+#Include <ProcessModKeys>
+#Include <TrayMenu>
