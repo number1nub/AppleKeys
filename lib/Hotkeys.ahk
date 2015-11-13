@@ -167,8 +167,8 @@ hotkeyEnd() {
 ; Send Delete keystroke repeatedly while Eject still pressed
 SendDelete:
 if (cfg.ejPressed = 1) {
-	SendInput {Blind}{delete}
-	SetTimer, SendDelete, -40
+	SendInput, {Blind}{delete}
+	SetTimer, SendDelete, -70
 }
 return
 

@@ -1,12 +1,13 @@
 TrayMenu(hideDef:="") {
-	static Version, scrName, icoUrl
-	scrName := RegExReplace(A_ScriptName, "\.(ahk|exe)$")
-	icoUrl := "http://files.wsnhapps.com/AppleKeys/" (ico:=scrName ".ico")
+	static scrName := RegExReplace(A_ScriptName, "\.(ahk|exe)$")
+		 , icoUrl  := "http://files.wsnhapps.com/AppleKeys/" (ico:=scrName ".ico")
+		 , Version
+
 	;auto_version
-	
 	Menu, DefaultAHK, Standard
 	Menu, Tray, NoStandard
-	Menu, Tray, Add, Apple Keys: Enabled, MenuAction
+	Menu, Tray, Add, Disable Apple Keys, MenuAction
+	Menu, Tray, Default, Disable Apple Keys
 	Menu, Tray, Add
 	Menu, Tray, Add, Check For Update, CheckForUpdate
 	if (!A_IsCompiled && !hideDef) {

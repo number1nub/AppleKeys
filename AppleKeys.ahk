@@ -2,26 +2,19 @@
 #SingleInstance, Force
 #MaxHotkeysPerInterval 1000
 DetectHiddenWindows, On
-SetWorkingDir, %A_ScriptDir%
-
-global cfg:=new CConfig()
-
 TrayMenu()
 CheckUpdate()
 
-Gui, +ToolWindow +hwndHWND
-Gui, Show, x0 y0 h0 w0, AppleWKHelper
+global cfg := new CConfig()
 
-Res:=DllCall("GetRawInputDeviceList",UInt,0,"UInt *",Count,UInt,cfg.SizeofRawInputDeviceList),VarSetCapacity(RawInputList,cfg.SizeofRawInputDeviceList*Count),Res:=DllCall("GetRawInputDeviceList",UInt,&RawInputList,"UInt *",Count,UInt,cfg.SizeofRawInputDeviceList)
-
+DllCall("GetRawInputDeviceList", UInt, 0, "UInt *", Count, UInt, cfg.HIDList_Size)
+VarSetCapacity(RawInputList, cfg.HIDList_Size*Count)
+DllCall("GetRawInputDeviceList", UInt, &RawInputList, "UInt *", Count, UInt, cfg.HIDList_Size)
 Loop %Count% {
-	Handle := NumGet(RawInputList, (A_Index-1)*cfg.SizeofRawInputDeviceList)
-	Type   := NumGet(RawInputList, (A_Index-1)*cfg.SizeofRawInputDeviceList+4)
-	TypeName := (Type=cfg.RIM_TYPEMOUSE) ? "RIM_TYPEMOUSE" : (Type=cfg.RIM_TYPEKEYBOARD) ? "RIM_TYPEKEYBOARD" : (Type=cfg.RIM_TYPEHID) ? "RIM_TYPEHID" : "RIM_OTHER"
-	VarSetCapacity(Info, cfg.SizeofRidDeviceInfo)
-	NumPut(cfg.SizeofRidDeviceInfo, Info, 0)
-	Length := cfg.SizeofRidDeviceInfo
-	Res := DllCall("GetRawInputDeviceInfo", UInt, Handle, UInt, cfg.RIDI_DEVICEINFO, UInt, &Info, "UInt *", Length)
+	Handle := NumGet(RawInputList, (A_Index-1)*cfg.HIDList_Size)
+	Type   := NumGet(RawInputList, (A_Index-1)*cfg.HIDList_Size+4)
+	VarSetCapacity(Info, cfg.RIDInfo_Size), NumPut(cfg.RIDInfo_Size, Info, 0)
+	DllCall("GetRawInputDeviceInfo", UInt, Handle, UInt, cfg.RIDI_DEVICEINFO, UInt, &Info, "UInt *", cfg.RIDInfo_Size)
 	if (Type=cfg.RIM_TYPEHID) {
 		Vendor    := NumGet(Info, 4*2, "UShort")
 		Product   := NumGet(Info, 4*3, "UShort")
@@ -29,13 +22,14 @@ Loop %Count% {
 		UsagePage := NumGet(Info, (4*5), "UShort")
 		Usage     := NumGet(Info, (4*5)+2, "UShort")
 	}
-	VarSetCapacity(RawDevice, cfg.SizeofRawInputDevice), NumPut(cfg.RIDEV_INPUTSINK, RawDevice, 4), NumPut(HWND, RawDevice, 8)
-	if (Type=cfg.RIM_TYPEHID && Vendor=1452  && cfg.rimHIDregistered=0) {
-		cfg.rimHIDregistered := 1
+	VarSetCapacity(RawDevice, cfg.RID_Size), NumPut(cfg.RIDEV_INPUTSINK, RawDevice, 4), NumPut(cfg.HWND, RawDevice, 8)
+	if (Type=cfg.RIM_TYPEHID && Vendor=1452  && cfg.RIMHIDregistered=0) {
+		cfg.RIMHIDregistered := 1
 		NumPut(UsagePage, RawDevice, 0, "UShort"), NumPut(Usage, RawDevice, 2, "UShort")
-		Res := DllCall("RegisterRawInputDevices", "UInt", &RawDevice, UInt, 1, UInt, cfg.SizeofRawInputDevice)
-		if (!Res)
-			throw {message:"Failed to register for AWK device!"}
+		if (!DllCall("RegisterRawInputDevices", "UInt", &RawDevice, UInt, 1, UInt, cfg.RID_Size)){
+			m("Failed to register for AWK device!","ico:!")
+			ExitApp
+		}
 	}
 }
 OnMessage(0x00FF, "InputMessage")

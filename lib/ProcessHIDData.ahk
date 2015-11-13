@@ -1,24 +1,12 @@
 ProcessHIDData(wParam, lParam) {
 	SetTimer, SendDelete, Off
-	Transform, FnValue, BitAnd, 0xFF10, cfg.hidMessage
-	if (FnValue = 0x1110)
-		cfg.fnPrevState:=cfg.fnPressed, cfg.fnPressed:=1
-	else
-		cfg.fnPrevState := cfg.fnPressed, cfg.fnPressed := 0
 	
-	Transform, FnValue, BitAnd, 0xFF08, cfg.hidMessage
-	if (FnValue = 0x1108)
-		cfg.ejPrevState := cfg.ejPressed, cfg.ejPressed := 1
-	else
-		cfg.ejPrevState := cfg.ejPressed, cfg.ejPressed := 0
+	cfg.fnPrevState:=cfg.fnPressed, cfg.fnPressed:=(0xFF10&cfg.hidMessage)=0x1110?1:0
+	cfg.ejPrevState:=cfg.ejPressed, cfg.ejPressed:=(0xFF08&cfg.hidMessage)=0x1108?1:0
 	
-	; Filter bit 1 fnd 2 (Power key)
-	Transform, FnValue, BitAnd, 0xFF03, cfg.hidMessage
-	if (FnValue = 0x1303) {	;Power pressed --> Suspend script
+	if ((0xFF03&cfg.hidMessage) = 0x1303) {	;Power pressed --> Suspend script
 		if (GetKeyState("Alt")) {
-			MsgBox 4643, ARE YOU SURE?, Quit Apple Keys?
-			IfMsgBox, Yes
-			{
+			if (m("Quit Apple Keys?", "title:ARE YOU SURE??","ico:?", "btn:yn")="YES") {
 				cfg.Reset()
 				ExitApp
 			}
@@ -27,12 +15,15 @@ ProcessHIDData(wParam, lParam) {
 			Reload
 			Pause
 		}
-		else
-			pwrPressed:=1, CheckSuspend()
+		else{
+			pwrPressed := 1
+			CheckSuspend()
+		}
 	} 
-	if (fnValue = 0x1302)	; Power is released
+	if (fnValue = 0x1302) {	; Power is released
 		if (!GetKeyState("Alt"))
-			pwrPrevState := 1, pwrPressed := 0
+			pwrPrevState:=1, pwrPressed:=0
+	}
 	if (cfg.isSuspend = 0)
 		ProcessModKeys()
 }

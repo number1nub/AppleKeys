@@ -1,10 +1,10 @@
 MenuAction() {
-	if (A_ThisMenuItem = "Apple Keys Enabled") {
-		enabled := !enabled
-		Menu, Tray, ToggleCheck, %A_ThisMenuItem%
-	}
-	else if (A_ThisMenuItem = "Reload")
+	if (A_ThisMenuItem ~= "(En|Dis)able Apple Keys")
+		CheckSuspend()
+	else if (A_ThisMenuItem = "Reload") {
 		Reload
+		Pause
+	}
 	else if (A_ThisMenuItem = "Exit")
 		ExitApp
 }
