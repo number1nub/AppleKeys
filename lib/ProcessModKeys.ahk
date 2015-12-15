@@ -1,21 +1,23 @@
 ProcessModKeys() {
-	if (cfg.lctrlPressed=0) {
-		if (cfg.ejPressed=1 && cfg.ejPrevState=0) {
-			if  (GetKeyState("Shift") || GetKeyState("Alt") || GetKeyState("Control"))
-				SendInput {Blind}{Delete}
-			else if (cfg.fnPressed=1)
-				SendInput {Ctrl}{Delete}
-			else {
-				SendInput {Delete}
-				SetTimer, SendDelete, -500
-			}
+	
+	; Eject Pressed --> Send Delete
+	if (cfg.ejPressed=1 && cfg.ejPrevState=0 && cfg.lctrlPressed=0) {
+		if (cfg.fnPressed=1)
+			SendInput, {Blind}^{Delete}
+		else if (GetMods() ~= "(\+\^\#\!)+")
+			SendInput, {Blind}{Delete}
+		else {
+			SendInput, {Blind}{Delete}
+			SetTimer, SendDelete, -250
 		}
 	}
+	
+	; FN --> RControl
 	if (cfg.ejPressed=0) {
 		if (cfg.fnPressed=1 && cfg.fnPrevState=0)
-			SendInput {rCtrl Down}
+			SendInput, {Blind}{RControl Down}
 		if (cfg.fnPressed=0 && cfg.fnPrevState=1)
-			SendInput {rCtrl Up}
+			SendInput, {Blind}{RControl Up}
 	}
 	
 	; lctrl + Eject

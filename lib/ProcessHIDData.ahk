@@ -1,10 +1,17 @@
 ProcessHIDData(wParam, lParam) {
+	static msgVals := {0xFF10:0x1110, 0xFF08:0x1108, 0xFF03:0x1303}
+	
 	SetTimer, SendDelete, Off
+	SendInput, {Blind}{Delete Up}
 	
-	cfg.fnPrevState:=cfg.fnPressed, cfg.fnPressed:=(0xFF10&cfg.hidMessage)=0x1110?1:0
-	cfg.ejPrevState:=cfg.ejPressed, cfg.ejPressed:=(0xFF08&cfg.hidMessage)=0x1108?1:0
+	msg := cfg.hidMessage
+	res := msgVals[msg]
+	cfg.fnPrevState:=cfg.fnPressed, cfg.fnPressed:=(0xFF10&cfg.hidMessage=0x1110) ? 1 : 0
+	cfg.ejPrevState:=cfg.ejPressed, cfg.ejPressed:=(0xFF08&cfg.hidMessage=0x1108) ? 1 : 0
 	
-	if ((0xFF03&cfg.hidMessage) = 0x1303) {	;Power pressed --> Suspend script
+	if (0xFF08&cfg.hidMessage = 0x1108)
+		
+	if (0xFF03&cfg.hidMessage = 0x1303) {	;Power pressed --> Suspend script
 		if (GetKeyState("Alt")) {
 			if (m("Quit Apple Keys?", "title:ARE YOU SURE??","ico:?", "btn:yn")="YES") {
 				cfg.Reset()

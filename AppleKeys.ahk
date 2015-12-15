@@ -2,6 +2,7 @@
 #SingleInstance, Force
 #MaxHotkeysPerInterval 1000
 DetectHiddenWindows, On
+SetBatchLines, -1
 TrayMenu()
 CheckUpdate()
 
