@@ -1,8 +1,8 @@
 #NoEnv
 #SingleInstance, Force
-#MaxHotkeysPerInterval 1000
 DetectHiddenWindows, On
 SetBatchLines, -1
+CheckAdmin()
 TrayMenu()
 CheckUpdate()
 
@@ -37,6 +37,7 @@ OnMessage(0x00FF, "InputMessage")
 return
 
 
+#Include <CheckAdmin>
 #Include <CheckSuspend>
 #Include <CheckUpdate>
 #Include <class Config>

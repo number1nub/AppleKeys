@@ -20,15 +20,17 @@ ProcessModKeys() {
 			SendInput, {Blind}{RControl Up}
 	}
 	
-	; lctrl + Eject
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0 && cfg.ejPrevState=1 && cfg.fnPressed=0) {
-		RegRead, ejCmd, HKCU, Software\WSNHapps\AppleKeys, ejCmd
-		if (ErrorLevel || !ejCmd) {
-			m("This command must be set!", "ico:!")
+	/*
+		; lctrl + Eject
+		if (cfg.lctrlPressed=1 && cfg.ejPressed=0 && cfg.ejPrevState=1 && cfg.fnPressed=0) {
+			RegRead, ejCmd, HKCU, Software\WSNHapps\AppleKeys, ejCmd
+			if (ErrorLevel || !ejCmd) {
+				m("This command must be set!", "ico:!")
 			;~ Run, *edit "%A_ScriptFullPath%"
+			}
+			else {
+				Send, % "{Blind}" ExpandEnv(ejCmd) ;#[TODO: Handle custom actions]
+			}
 		}
-		else {
-			Send, % "{Blind}" ExpandEnv(ejCmd) ;#[TODO: Handle custom actions]
-		}
-	}
+	*/
 }

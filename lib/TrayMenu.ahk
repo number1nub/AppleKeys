@@ -26,5 +26,5 @@ TrayMenu(hideDef:="") {
 		Menu, Tray, Icon, % FileExist(ico) ? ico : ""
 	}
 	
-	Menu, Tray, Tip, % scrName (Version ? " v" Version:"") " Running..."
+	Menu, Tray, Tip, % scrName (A_IsAdmin ? " (Admin)":"") (Version ? " v" Version:"") " Running..."
 }

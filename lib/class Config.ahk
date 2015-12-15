@@ -17,22 +17,28 @@ class CConfig
 		Gui, +ToolWindow +hwndHWND
 		Gui, Show, x0 y0 h0 w0, AppleKeysHelper
 		this.HWND := HWND
-		
-		for c, v in this.KEY_STATES
-			this[v] := 0
+		this.Unlock()
 	}
 	
 	Reset() {
-		this.isSuspend := 0
 		Suspend, Off
+		SendInput, {Blind}{CtrlUp}{RControl Up}{ShiftUp}{AltUp}{Delete Up}
+		for c, v in CConfig.KEY_STATES
+			this[v] := 0
 	}
 	
 	Suspend() {
-		for c, v in this.KEY_STATES
-			this[c] := 0
-		Send, {CtrlUp}{AltUp}
-		this.isSuspend := 1
 		SetTimer, SendDelete, Off
+		for c, v in CConfig.KEY_STATES
+			this[c] := 0
+		SendInput, {Blind}{CtrlUp}{AltUp}{RControl Up}{ShiftUp}
+		this.isSuspend := 1
 		Suspend, On
+	}
+	
+	Unlock() {
+		SendInput, {Blind}{CtrlUp}{RControl Up}{ShiftUp}{AltUp}{Delete Up}
+		for c, v in CConfig.KEY_STATES
+			this[v] := 0
 	}
 }

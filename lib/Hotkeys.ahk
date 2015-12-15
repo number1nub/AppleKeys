@@ -168,7 +168,7 @@ hotkeyEnd() {
 SendDelete:
 if (cfg.ejPressed) {
 	SendInput, {Blind}{Delete}
-	SetTimer, SendDelete, -100
+	SetTimer, SendDelete, -50
 }
 return
 

@@ -1,17 +1,25 @@
 ProcessHIDData(wParam, lParam) {
-	static msgVals := {0xFF10:0x1110, 0xFF08:0x1108, 0xFF03:0x1303}
+	static msgVals := {"fnPressed":[0xFF10,0x1110], "ejPressed":[0xFF08,0x1108], "pwrPressed":[0xFF03,0x1303]}
 	
 	SetTimer, SendDelete, Off
-	SendInput, {Blind}{Delete Up}
 	
 	msg := cfg.hidMessage
-	res := msgVals[msg]
-	cfg.fnPrevState:=cfg.fnPressed, cfg.fnPressed:=(0xFF10&cfg.hidMessage=0x1110) ? 1 : 0
-	cfg.ejPrevState:=cfg.ejPressed, cfg.ejPressed:=(0xFF08&cfg.hidMessage=0x1108) ? 1 : 0
+	cfg.fnPrevState := cfg.fnPressed
+	cfg.ejPrevState := cfg.ejPressed
 	
-	if (0xFF08&cfg.hidMessage = 0x1108)
-		
-	if (0xFF03&cfg.hidMessage = 0x1303) {	;Power pressed --> Suspend script
+	for c, v in msgVals
+		cfg[c] := (v[1] & msg = v[2]) ? 1 : 0
+	
+	
+	;~ cfg.fnPrevState := cfg.fnPressed
+	;~ cfg.ejPrevState := cfg.ejPressed
+	;~ cfg.fnPressed:=(0xFF10 & msg = 0x1110) ? 1 : 0
+	;~ cfg.ejPressed:=(0xFF08 & msg = 0x1108) ? 1 : 0
+	
+	; Power Pressed
+	;~ if (0xFF03&msg = 0x1303) {
+	
+	if (cfg.pwrPressed) {
 		if (GetKeyState("Alt")) {
 			if (m("Quit Apple Keys?", "title:ARE YOU SURE??","ico:?", "btn:yn")="YES") {
 				cfg.Reset()
@@ -23,13 +31,13 @@ ProcessHIDData(wParam, lParam) {
 			Pause
 		}
 		else{
-			pwrPressed := 1
+			cfg.pwrPressed := 1
 			CheckSuspend()
 		}
 	} 
 	if (fnValue = 0x1302) {	; Power is released
 		if (!GetKeyState("Alt"))
-			pwrPrevState:=1, pwrPressed:=0
+			cfg.pwrPrevState:=1, cfg.pwrPressed:=0
 	}
 	if (cfg.isSuspend = 0)
 		ProcessModKeys()
