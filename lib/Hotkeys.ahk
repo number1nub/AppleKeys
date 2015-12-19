@@ -1,8 +1,10 @@
 
+
+
 ; fn+F3 = PrtScr
 $F3::
 hotkeyF3() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}{PrintScreen}
 	else
 		SendInput, {Blind}{F3}
@@ -12,7 +14,7 @@ hotkeyF3() {
 ; fn+alt F3 = PrtScr for Active Window
 $!F3::
 hotkeyAltF3() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}!{PrintScreen}
 	else 
 		SendInput, {Blind}!{F3}
@@ -21,7 +23,7 @@ hotkeyAltF3() {
 ; fn+ctrl F3 = Ctrl+PrtScr
 $^F3::
 hotkeyCtrlF3() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}^{PrintScreen}
 	else 
 		SendInput, {Blind}^{F3}
@@ -30,7 +32,7 @@ hotkeyCtrlF3() {
 ; fn+F4 = Run TM
 $F4::
 hotkeyF4() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}{F4}
 	else
 		SendInput, {Blind}#c{Down 2}{Enter}
@@ -39,7 +41,7 @@ hotkeyF4() {
 ; WinMPlayer: Previous
 $F7::
 hotkeyF7() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}{Media_Prev}  ; Previous
 	else
 		SendInput, {Blind}{F7}
@@ -48,7 +50,7 @@ hotkeyF7() {
 ; WinMPlayer: Pause/Unpause
 $F8::
 hotkeyF8() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}{Media_Play_Pause} ; Pause/Unpause
 	else
 		SendInput, {Blind}{F8}
@@ -57,7 +59,7 @@ hotkeyF8() {
 ; WinMPlayer: Next
 $F9::
 hotkeyF9() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}{Media_Next} ; Next
 	else
 		SendInput, {Blind}{F9}
@@ -66,7 +68,7 @@ hotkeyF9() {
 ; System volume: Mute/Unmute
 $F10::
 hotkeyF10() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}{Volume_Mute} ; Mute/unmute the master volume.
 	else
 		SendInput, {Blind}{F10}
@@ -75,21 +77,17 @@ hotkeyF10() {
 ; System volume: Volume Down
 $F11::
 hotkeyF11() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}{Volume_Down} ; Lower the master volume by 1 interval (typically 5%)
 	else
 		SendInput, {Blind}{F11}
 }
 
 
-; switch F12 to Insert
-;~ *F12::SendInput, {Blind}{Insert}
-
-
-; System volume: Volume Down
+; Fn + F12 ==> Volume Up
 $F12::
 hotkeyF12() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0 && cfg.fnPressed=0)
+	if (cfg.lctrlPressed && !cfg.ejPressed && !cfg.fnPressed)
 		SendInput, {Blind}{Volume_Up}  ; Raise the master volume by 1 interval (typically 5%).
 	else
 		SendInput, {Blind}{F12}
@@ -97,67 +95,67 @@ hotkeyF12() {
 
 
 
-; Up ==>> Page Up
+; Fn + Up ==>> Page Up
 $UP:: 
 hotkeyPgUp() {
-	if (cfg.lctrlPressed=1 && cfg.ejPressed=0) {
+	if (cfg.lctrlPressed && !cfg.ejPressed) {
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{rCtrl Up}+{PgUp}
+			SendInput, {Blind}{RControl Up}+{PgUp}
 		else
-			SendInput, {Blind}{rCtrl Up}{PgUp}
+			SendInput, {Blind}{RControl Up}{PgUp}
 	}
 	else
-		SendInput, {Blind}{UP}
+		SendInput, {Blind}{Up}
 }
 
-; Down ==>> Page Down
+; Fn + Down ==>> Page Down
 $Down::
 hotkeyPgDn() { 
-	if (cfg.lctrlPressed=1 && cfg.fnPressed=1 && cfg.ejPressed=0)
-		SendInput, {Blind}{rctrl up}^{PgDn}
-	else if (cfg.lctrlPressed=1 && cfg.fnPressed=0 && cfg.ejPressed=0)
-		SendInput, {Blind}{rCtrl Up}{PgDn}
+	if (cfg.lctrlPressed && cfg.fnPressed && !cfg.ejPressed)
+		SendInput, {Blind}{RControl Up}^{PgDn}
+	else if (cfg.lctrlPressed && !cfg.fnPressed && !cfg.ejPressed)
+		SendInput, {Blind}{RControl Up}{PgDn}
 	else
 		SendInput, {Blind}{Down}
 }
 
 
-; Left ==>> Home
+; Fn + Left ==>> Home
 $*Left::
 hotkeyHome() {
 	mods := GetMods()
-	if (cfg.lctrlPressed=1 && cfg.fnPressed=0 && cfg.ejPressed=0){
+	if (cfg.lctrlPressed && !cfg.fnPressed && !cfg.ejPressed){
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{rCtrl Up}+{Home}
+			SendInput, {Blind}{RControl Up}+{Home}
 		else
-			sendinput, {Blind}{rCtrl up}{Home}
+			sendinput, {Blind}{RControl Up}{Home}
 	}
-	else if (cfg.lctrlPressed=1 && cfg.fnPressed=1 && cfg.ejPressed=0){
+	else if (cfg.lctrlPressed && cfg.fnPressed && !cfg.ejPressed){
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{rCtrl up}^+{Home}
+			SendInput, {Blind}{RControl Up}^+{Home}
 		else
-			SendInput, {Blind}{rCtrl up}^{Home}
+			SendInput, {Blind}{RControl Up}^{Home}
 	}
 	else
 		SendInput, {Blind}%mods%{Left}
 }
 
 
-; Right ==>> End
+; Fn + Right ==>> End
 $*Right::
 hotkeyEnd() {
 	mods := GetMods()
-	if (cfg.lctrlPressed=1 && cfg.fnPressed=0 && cfg.ejPressed=0){
+	if (cfg.lctrlPressed && !cfg.fnPressed && !cfg.ejPressed){
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{rCtrl Up}+{End}
+			SendInput, {Blind}{RControl Up}+{End}
 		else
-			sendinput, {Blind}{rCtrl up}{End}
+			SendInput, {Blind}{RControl Up}{End}
 	}
-	else if (cfg.lctrlPressed=1 && cfg.fnPressed=1 && cfg.ejPressed=0){
+	else if (cfg.lctrlPressed && cfg.fnPressed && !cfg.ejPressed){
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{rCtrl up}^+{End}
+			SendInput, {Blind}{RControl Up}^+{End}
 		else
-			SendInput, {Blind}{rCtrl up}^{End}
+			SendInput, {Blind}{RControl Up}^{End}
 	}
 	else
 		SendInput, {Blind}%mods%{Right}
@@ -168,11 +166,25 @@ hotkeyEnd() {
 SendDelete:
 if (cfg.ejPressed) {
 	SendInput, {Blind}{Delete}
-	SetTimer, SendDelete, -50
+	SetTimer, SendDelete, -75
 }
 return
 
 
+; LCtrl ==>> Fn
+$*LControl Up::
+hotkeyLCtrlUp() {
+	cfg.lctrlPressed := 0
+	SendInput, {Blind}{F24 Up}
+}
+
+
+$*LControl::
+hotkeyLCtrlDn() {
+	cfg.lctrlPressed := 1
+	SetTimer, SendDelete, Off
+	SendInput, {F24 down}
+}
 
 ; Plus-minus ==>> `/~
 VKE2::VKC0
@@ -181,18 +193,5 @@ VKE2::VKC0
 VKC0::LShift
 
 
-
-; lCtrl ==>> fn (Sets global var forcfg.lctrlPressed)
-$*lControl up::
-LCtrlUp() {
-	cfg.lctrlPrevState:=1, cfg.lctrlPressed:=0
-	SendInput, {Blind}{F24 up}
-}
-
-
-$*lControl::
-LCtrlDn() {	
-	cfg.lctrlPrevState:=0, cfg.lctrlPressed:=1	
-	SetTimer, SendDelete, Off
-	SendInput, {F24 down}
-}
+; RWin ==> RControl
+RWin::RControl

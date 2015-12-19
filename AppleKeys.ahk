@@ -1,5 +1,7 @@
 #NoEnv
 #SingleInstance, Force
+#MaxHotkeysPerInterval,5000
+#HotkeyInterval,1
 DetectHiddenWindows, On
 SetBatchLines, -1
 CheckAdmin()
@@ -49,5 +51,4 @@ return
 #Include <Mem2Hex>
 #Include <MenuAction>
 #Include <ProcessHIDData>
-#Include <ProcessModKeys>
 #Include <TrayMenu>
