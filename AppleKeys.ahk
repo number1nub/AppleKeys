@@ -237,7 +237,7 @@ CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="",
 	_Information := _Information ? _Information : "None"
 	Return Return_Val
 }
-class CConfig
+Class CConfig
 {
 	static KEY_STATES       := ["ejPressed","ejPrevState","fnPressed","fnPrevState","hidMessage","isSuspend","lctrlPressed","lctrlPrevState","pwrPressed","pwrPrevState"]
 	static RID_INPUT        := 0x10000003
