@@ -43,7 +43,6 @@ return
 #Include <CheckSuspend>
 #Include <CheckUpdate>
 #Include <class Config>
-#Include <ExpandEnv>
 #Include <GetMods>
 #Include <Hotkeys>
 #Include <InputMessage>
