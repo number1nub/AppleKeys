@@ -9,8 +9,7 @@ CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="",
 		 , Retry_Count := 2
 		 , Script_Name
 		 , Version
-	
-	;auto_version
+
 	if (!Version)
 		return
 	if (!Script_Name) {
