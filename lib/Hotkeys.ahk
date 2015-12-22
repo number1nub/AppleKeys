@@ -1,6 +1,3 @@
-
-
-
 ; fn+F3 = PrtScr
 $F3::
 hotkeyF3() {
@@ -33,9 +30,9 @@ hotkeyCtrlF3() {
 $F4::
 hotkeyF4() {
 	if (cfg.lctrlPressed && !cfg.ejPressed)
-		SendInput, {Blind}{F4}
-	else
 		SendInput, {Blind}#c{Down 2}{Enter}
+	else
+		SendInput, {Blind}{F4}
 }
 
 ; WinMPlayer: Previous
