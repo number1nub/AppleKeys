@@ -1,4 +1,4 @@
-class CConfig
+Class CConfig
 {
 	static KEY_STATES       := ["ejPressed","ejPrevState","fnPressed","fnPrevState","hidMessage","isSuspend","lctrlPressed","lctrlPrevState","pwrPressed","pwrPrevState"]
 	static RID_INPUT        := 0x10000003
