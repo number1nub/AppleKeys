@@ -26,8 +26,8 @@ Loop %Count% {
 		Usage     := NumGet(Info, (4*5)+2, "UShort")
 	}
 	VarSetCapacity(RawDevice, cfg.RID_Size), NumPut(cfg.RIDEV_INPUTSINK, RawDevice, 4), NumPut(cfg.HWND, RawDevice, 8)
-	if (Type=cfg.RIM_TYPEHID && Vendor=1452  && cfg.RIMHIDregistered=0) {
-		cfg.RIMHIDregistered := 1
+	if (Type=cfg.RIM_TYPEHID && Vendor=1452  && !cfg.IsRegistered) {
+		cfg.IsRegistered := 1
 		NumPut(UsagePage, RawDevice, 0, "UShort"), NumPut(Usage, RawDevice, 2, "UShort")
 		if (!DllCall("RegisterRawInputDevices", "UInt", &RawDevice, UInt, 1, UInt, cfg.RID_Size)){
 			m("Failed to register for AWK device!","ico:!")
@@ -43,6 +43,8 @@ return
 #Include <CheckSuspend>
 #Include <CheckUpdate>
 #Include <class Config>
+#Include <Exit>
+#Include <ExpandEnv>
 #Include <GetMods>
 #Include <Hotkeys>
 #Include <InputMessage>

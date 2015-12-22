@@ -1,3 +1,5 @@
+1.1.7.05
+- [Fixed] Power button wasn't suspending & pausing correctly
 1.1.7.04
 - [Fixed] F4 default hotkey sends F4 instead of special action
 1.1.7.03

@@ -1,27 +1,23 @@
 ProcessHIDData(wParam, lParam) {
-	SetTimer, SendDelete, Off
+	static keyMsgs:={fnPressed:[0xFF10,0x1110], ejPressed:[0xFF08,0x1108], pwrPressed:[0xFF03,0x1303]}
 	
-	cfg.fnPrevState:=cfg.fnPressed, cfg.ejPrevState:=cfg.ejPressed, cfg.pwrPrevState:=cfg.pwrPressed
-	for c, v in {fnPressed:[0xFF10,0x1110], ejPressed:[0xFF08,0x1108], pwrPressed:[0xFF03,0x1303]}
-		cfg[c] := (v[1]&cfg.hidMessage = v[2]) ? 1 : 0
-		
+	SetTimer, SendDelete, Off
+	for c, v in keyMsgs
+		cfg[StrReplace(c,"Pressed","PrevState")]:=cfg[c], cfg[c]:=(v[1]&cfg.hidMessage=v[2])?1:0
+	
 	;{== Power Key Pressed ==>>
-	if (!cfg.pwrPressed && cfg.pwrPrevState && !GetMods() && !cfg.fnPressed)
-	{
+	if (!cfg.pwrPressed && cfg.pwrPrevState) {
 		if (GetKeyState("Alt")) {
-			if (m("Quit Apple Keys?", "title:ARE YOU SURE??","ico:?", "btn:yn")="YES") {
-				cfg.Reset()
-				ExitApp
-			}
+			if (m("Quit Apple Keys?", "title:ARE YOU SURE??","ico:?", "btn:yn")="YES")
+				cfg.Reset(), Exit()
 		}
-		else if (GetKeyState("Ctrl")) {
+		else if (cfg.lctrlPressed) {
 			cfg.Reset()
 			Reload
 			Pause
 		}
-		else {
+		else
 			CheckSuspend()
-		}
 	}
 	;}
 	

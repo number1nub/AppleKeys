@@ -1,7 +1,7 @@
 CheckAdmin() {
 	if (!A_IsAdmin) {
 		if (%true% = "admin") {
-			MsgBox, 4148,, Failed to get admin credentials.`n`nTry again?
+			MsgBox, 262196,, Failed to get admin credentials.`n`nTry again?
 			IfMsgBox, No
 				ExitApp
 		}

@@ -16,7 +16,7 @@ TrayMenu(hideDef:="") {
 	}
 	Menu, Tray, Add,
 	Menu, Tray, Add, Reload, MenuAction
-	Menu, Tray, Add, Exit, MenuAction
+	Menu, Tray, Add, Exit
 	
 	if (A_IsCompiled)
 		Menu, Tray, Icon, % A_ScriptFullpath, -159

@@ -8,7 +8,6 @@ class CConfig
 	static RIM_TYPEMOUSE    := 0
 	static RIM_TYPEKEYBOARD := 1
 	static RIM_TYPEHID      := 2
-	static RIMHIDRegistered := 0
 	static HIDList_Size     := 8
 	static RID_Size         := 12
 	static RIDInfo_Size     := 32
@@ -29,6 +28,15 @@ class CConfig
 		}
 	}
 	
+	IsRegistered[] {
+		get {
+			return this._IsRegistered
+		}
+		set {
+			return this._IsRegistered := value
+		}
+	}
+	
 	HWND[] {
 		get {
 			return this._HWND
@@ -37,7 +45,7 @@ class CConfig
 			return this._HWND := value
 		} 
 	}
-		
+	
 	CAction[] {
 		get {
 			if (!this._CAction) {
