@@ -46,6 +46,15 @@ class CConfig
 		} 
 	}
 	
+	Version[] {
+		get {
+			return ;auto_version
+		}
+		set {
+			return
+		}
+	}
+	
 	CAction[] {
 		get {
 			if (!this._CAction) {

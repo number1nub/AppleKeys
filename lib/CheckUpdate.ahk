@@ -1,16 +1,14 @@
 CheckForUpdate() {
 	if (!CheckUpdate())
-		m("No update found.", "i")
+		m("No update found.", "title:AppleKeys" (cfg.Version ? " v" cfg.Version : ""), "i")
 }
-
 CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="", ByRef _Information:="") {
-	Static Update_URL  := "http://files.wsnhapps.com/AppleKeys/AppleKeys.text"
+	Static Update_URL   := "http://files.wsnhapps.com/AppleKeys/AppleKeys.text"
 		 , Download_URL := "http://files.wsnhapps.com/AppleKeys/AppleKeys.exe"
-		 , Retry_Count := 2
+		 , Retry_Count  := 2
 		 , Script_Name
-		 , Version
 
-	if (!Version)
+	if (!version := cfg.Version)
 		return
 	if (!Script_Name) {
 		SplitPath, A_ScriptFullPath,,,, scrName

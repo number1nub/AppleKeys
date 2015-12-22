@@ -8,7 +8,7 @@ ProcessHIDData(wParam, lParam) {
 	;{== Power Key Pressed ==>>
 	if (!cfg.pwrPressed && cfg.pwrPrevState) {
 		if (GetKeyState("Alt")) {
-			if (m("Quit Apple Keys?", "title:ARE YOU SURE??","ico:?", "btn:yn")="YES")
+			if (m("Quit AppleKeys?", "title:ARE YOU SURE??","ico:?", "btn:yn")="YES")
 				cfg.Reset(), Exit()
 		}
 		else if (cfg.lctrlPressed) {

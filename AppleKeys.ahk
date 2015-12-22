@@ -5,11 +5,10 @@
 DetectHiddenWindows, On
 SetBatchLines, -1
 CheckAdmin()
-TrayMenu()
-CheckUpdate()
 
 global cfg := new CConfig()
 
+TrayMenu(), CheckUpdate()
 DllCall("GetRawInputDeviceList", UInt, 0, "UInt *", Count, UInt, cfg.HIDList_Size)
 VarSetCapacity(RawInputList, cfg.HIDList_Size*Count)
 DllCall("GetRawInputDeviceList", UInt, &RawInputList, "UInt *", Count, UInt, cfg.HIDList_Size)
@@ -37,7 +36,6 @@ Loop %Count% {
 }
 OnMessage(0x00FF, "InputMessage")
 return
-
 
 #Include <CheckAdmin>
 #Include <CheckSuspend>

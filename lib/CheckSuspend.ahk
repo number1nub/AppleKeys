@@ -1,14 +1,12 @@
 CheckSuspend() {
 	static sname := "AppleKeys"
 	
-	Menu, Tray, Rename,% (cfg.isSuspend?"Enable":"Disable") " Apple Keys" ,% (cfg.isSuspend?"Disable":"Enable") " Apple Keys" 
+	Menu, Tray, Rename, % (cfg.isSuspend ? "Enable":"Disable") " AppleKeys" , % (cfg.isSuspend?"Disable":"Enable") " AppleKeys"
 	if (!cfg.isSuspend) {
 		cfg.Suspend()
 		TrayTip, %sname%, Suspended, 1, 1
-	}
-	else {
+	} else {
 		cfg.Reset()
 		TrayTip, %sname%, Restored, 1, 1
-		Menu, Tray, Icon, % FileExist(ico:="AppleKeys.ico") ? ico : ""
-	}	
+	}
 }
