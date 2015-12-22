@@ -50,15 +50,13 @@ CheckAdmin() {
 	return 1
 }
 CheckSuspend() {
-	static sname := "AppleKeys"
-	
-	Menu, Tray, Rename, % (cfg.isSuspend ? "Enable":"Disable") " AppleKeys" , % (cfg.isSuspend?"Disable":"Enable") " AppleKeys"
+	Menu, Tray, Rename, % (cfg.isSuspend ? "Enable ":"Disable ") cfg.Name , % (cfg.isSuspend?"Disable ":"Enable ") cfg.Name
 	if (!cfg.isSuspend) {
 		cfg.Suspend()
-		TrayTip, %sname%, Suspended, 1, 1
+		TrayTip, % cfg.Name, Suspended, 1, 1
 	} else {
 		cfg.Reset()
-		TrayTip, %sname%, Restored, 1, 1
+		TrayTip, % cfg.Name, Restored, 1, 1
 	}
 }
 CheckForUpdate() {
@@ -68,7 +66,6 @@ CheckForUpdate() {
 CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="", ByRef _Information:="") {
 	Static Update_URL   := "https://raw.githubusercontent.com/number1nub/AppleKeys/SingleFile/AppleKeys.text"
 		 , Download_URL := "https://raw.githubusercontent.com/number1nub/AppleKeys/SingleFile/AppleKeys.ahk"
-		 , Script_Name  := "AppleKeys"
 		 , Retry_Count  := 2
 	
 	if (!version := cfg.Version)
@@ -94,7 +91,7 @@ CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="",
 		if (UDVersion > Version) {
 			FileRead, changeLog, %Version_File%
 			if (_SuppressMsgBox != 1 && _SuppressMsgBox != 3)
-				if (m("There is a new version of " Script_Name " available.", "Current version: " Version, "New version: " UDVersion, "Change Log:", "", changeLog, "", "Would you like to download it now?", "title:New version available", "btn:yn", "ico:i") = "Yes")
+				if (m("There is a new version of " cfg.Name " available.", "Current version: " Version, "New version: " UDVersion, "Change Log:", "", changeLog, "", "Would you like to download it now?", "title:New version available", "btn:yn", "ico:i") = "Yes")
 					MsgBox_Result := 1
 			if (_SuppressMsgBox || MsgBox_Result) {
 				URL := Download_URL
@@ -261,6 +258,24 @@ class CConfig
 		this.Reset()
 	}
 	
+	Name[] {
+		get {
+			return RegExReplace(A_ScriptName, "i)\.ahk|exe$")
+		}
+		set {
+			return
+		}
+	}
+	
+	Version[] {
+		get {
+			return version:="1.1.12"
+		}
+		set {
+			return
+		}
+	}
+	
 	IsSuspend[] {
 		get {
 			return this._IsSuspend
@@ -286,15 +301,6 @@ class CConfig
 		set {
 			return this._HWND := value
 		} 
-	}
-	
-	Version[] {
-		get {
-			return version:="1.1.10"
-		}
-		set {
-			return
-		}
 	}
 	
 	CAction[] {
@@ -571,7 +577,7 @@ Mem2Hex(pointer, len) {
 	Return Hex
 }
 MenuAction() {
-	if (A_ThisMenuItem ~= "(En|Dis)able AppleKeys")
+	if (A_ThisMenuItem ~= "(En|Dis)able " cfg.Name)
 		CheckSuspend()
 	else if (A_ThisMenuItem = "Reload") {
 		cfg.Reset()
@@ -628,12 +634,12 @@ ProcessHIDData(wParam, lParam) {
 	;}
 }
 TrayMenu(hideDef:="") {
-	static scrName:="AppleKeys", icoUrl:="http://files.wsnhapps.com/AppleKeys/AppleKeys.ico"
+	static icoUrl:="http://files.wsnhapps.com/AppleKeys/AppleKeys.ico"
 	
 	Menu, DefaultAHK, Standard
 	Menu, Tray, NoStandard
-	Menu, Tray, Add, Disable AppleKeys, MenuAction
-	Menu, Tray, Default, Disable AppleKeys
+	Menu, Tray, Add, % "Disable " cfg.Name, MenuAction
+	Menu, Tray, Default, % "Disable " cfg.Name
 	Menu, Tray, Add
 	Menu, Tray, Add, Check For Update, CheckForUpdate
 	if (!A_IsCompiled && !hideDef) {
@@ -648,12 +654,12 @@ TrayMenu(hideDef:="") {
 		Menu, Tray, Icon, % A_ScriptFullpath, -159
 	else {
 		if (!FileExist(ico)) {
-			URLDownloadToFile, %icoUrl%, % (ico:=A_ScriptDir "\" scrName ".ico")
+			URLDownloadToFile, %icoUrl%, % (ico:=A_ScriptDir "\" cfg.Name ".ico")
 			if (ErrorLevel)
 				FileDelete, %ico%
 		}
 		Menu, Tray, Icon, % FileExist(ico) ? ico : ""
 	}
 	
-	Menu, Tray, Tip, % scrName (A_IsAdmin ? " (Admin)":"") (cfg.Version ? " v" cfg.Version:"") " Running..."
+	Menu, Tray, Tip, % cfg.Name (A_IsAdmin ? " (Admin)":"") (cfg.Version ? " v" cfg.Version:"") " Running..."
 }

@@ -1,3 +1,7 @@
+1.1.12
+- Script name saved in Config
+1.1.11
+- Changed to use EXE file uploaded to GitHub
 1.1.10
 - Moved update location to GitHub SingleFile
 1.1.9
