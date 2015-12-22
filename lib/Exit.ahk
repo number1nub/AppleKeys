@@ -1,4 +1,0 @@
-Exit() {
-	cfg.Reset()
-	ExitApp
-}
