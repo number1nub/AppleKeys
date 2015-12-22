@@ -5,7 +5,6 @@ CheckForUpdate() {
 CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="", ByRef _Information:="") {
 	Static Update_URL   := "https://raw.githubusercontent.com/number1nub/AppleKeys/SingleFile/AppleKeys.text"
 		 , Download_URL := "https://raw.githubusercontent.com/number1nub/AppleKeys/SingleFile/AppleKeys.ahk"
-		 , Script_Name  := "AppleKeys"
 		 , Retry_Count  := 2
 	
 	if (!version := cfg.Version)
@@ -31,7 +30,7 @@ CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="",
 		if (UDVersion > Version) {
 			FileRead, changeLog, %Version_File%
 			if (_SuppressMsgBox != 1 && _SuppressMsgBox != 3)
-				if (m("There is a new version of " Script_Name " available.", "Current version: " Version, "New version: " UDVersion, "Change Log:", "", changeLog, "", "Would you like to download it now?", "title:New version available", "btn:yn", "ico:i") = "Yes")
+				if (m("There is a new version of " cfg.Name " available.", "Current version: " Version, "New version: " UDVersion, "Change Log:", "", changeLog, "", "Would you like to download it now?", "title:New version available", "btn:yn", "ico:i") = "Yes")
 					MsgBox_Result := 1
 			if (_SuppressMsgBox || MsgBox_Result) {
 				URL := Download_URL

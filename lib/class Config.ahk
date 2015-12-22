@@ -19,6 +19,24 @@ class CConfig
 		this.Reset()
 	}
 	
+	Name[] {
+		get {
+			return RegExReplace(A_ScriptName, "i)\.ahk|exe$")
+		}
+		set {
+			return
+		}
+	}
+	
+	Version[] {
+		get {
+			return ;auto_version
+		}
+		set {
+			return
+		}
+	}
+	
 	IsSuspend[] {
 		get {
 			return this._IsSuspend
@@ -44,15 +62,6 @@ class CConfig
 		set {
 			return this._HWND := value
 		} 
-	}
-	
-	Version[] {
-		get {
-			return ;auto_version
-		}
-		set {
-			return
-		}
 	}
 	
 	CAction[] {
