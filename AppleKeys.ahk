@@ -66,17 +66,13 @@ CheckForUpdate() {
 		m("No update found.", "title:AppleKeys" (cfg.Version ? " v" cfg.Version : ""), "i")
 }
 CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="", ByRef _Information:="") {
-	Static Update_URL   := "http://files.wsnhapps.com/AppleKeys/AppleKeys.text"
-		 , Download_URL := "http://files.wsnhapps.com/AppleKeys/AppleKeys.exe"
+	Static Update_URL   := "https://raw.githubusercontent.com/number1nub/AppleKeys/SingleFile/AppleKeys.text"
+		 , Download_URL := "https://raw.githubusercontent.com/number1nub/AppleKeys/SingleFile/AppleKeys.ahk"
+		 , Script_Name  := "AppleKeys"
 		 , Retry_Count  := 2
-		 , Script_Name
-
+	
 	if (!version := cfg.Version)
 		return
-	if (!Script_Name) {
-		SplitPath, A_ScriptFullPath,,,, scrName
-		Script_Name := scrName
-	}
 	Random, Filler, 10000000, 99999999	
 	Version_File := A_Temp "\" Filler ".ini", Temp_FileName:=A_Temp "\" Filler ".tmp", VBS_FileName:=A_Temp "\" Filler ".vbs"
 	Loop, %Retry_Count% {
@@ -294,7 +290,7 @@ class CConfig
 	
 	Version[] {
 		get {
-			return version:="1.1.9"
+			return version:="1.1.10"
 		}
 		set {
 			return
