@@ -4,11 +4,13 @@
 #HotkeyInterval,1
 DetectHiddenWindows, On
 SetBatchLines, -1
+SendMode, Input
 CheckAdmin()
 
-global cfg := new CConfig()
+global cfg:=new CConfig()
 
-TrayMenu(), CheckUpdate()
+TrayMenu()
+CheckUpdate()
 DllCall("GetRawInputDeviceList", UInt, 0, "UInt *", Count, UInt, cfg.HIDList_Size)
 VarSetCapacity(RawInputList, cfg.HIDList_Size*Count)
 DllCall("GetRawInputDeviceList", UInt, &RawInputList, "UInt *", Count, UInt, cfg.HIDList_Size)
@@ -269,7 +271,7 @@ Class CConfig
 	
 	Version[] {
 		get {
-			return version:="1.1.12"
+			return version:="1.1.13"
 		}
 		set {
 			return
@@ -577,13 +579,17 @@ Mem2Hex(pointer, len) {
 	Return Hex
 }
 MenuAction() {
-	if (A_ThisMenuItem ~= "(En|Dis)able " cfg.Name)
+	mi := StrReplace(A_ThisMenuItem, "&")
+	
+	if (mi ~= "(En|Dis)able " cfg.Name)
 		CheckSuspend()
-	else if (A_ThisMenuItem = "Reload") {
+	else if (mi = "Reload") {
 		cfg.Reset()
 		Reload
 		Pause
 	}
+	else if (mi = "Fix Sticky Keys")
+		SendInput, {Blind}{CtrlUp}{RControl Up}{ShiftUp}{AltUp}
 }
 ProcessHIDData(wParam, lParam) {
 	static keyMsgs:={fnPressed:[0xFF10,0x1110], ejPressed:[0xFF08,0x1108], pwrPressed:[0xFF03,0x1303]}
@@ -639,6 +645,7 @@ TrayMenu(hideDef:="") {
 	Menu, DefaultAHK, Standard
 	Menu, Tray, NoStandard
 	Menu, Tray, Add, % "Disable " cfg.Name, MenuAction
+	Menu, Tray, Add, Fix Sticky Keys, 
 	Menu, Tray, Default, % "Disable " cfg.Name
 	Menu, Tray, Add
 	Menu, Tray, Add, Check For Update, CheckForUpdate
