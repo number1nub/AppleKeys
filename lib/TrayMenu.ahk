@@ -4,7 +4,7 @@ TrayMenu(hideDef:="") {
 	Menu, DefaultAHK, Standard
 	Menu, Tray, NoStandard
 	Menu, Tray, Add, % "Disable " cfg.Name, MenuAction
-	Menu, Tray, Add, Fix Sticky Keys, 
+	Menu, Tray, Add, Fix Sticky Keys, MenuAction
 	Menu, Tray, Default, % "Disable " cfg.Name
 	Menu, Tray, Add
 	Menu, Tray, Add, Check For Update, CheckForUpdate
