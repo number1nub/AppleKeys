@@ -1,0 +1,53 @@
+1.1.13
+- Added 'Fix Sticky Keys' menu command
+1.1.12
+- Script name saved in Config
+1.1.11
+- Changed to use EXE file uploaded to GitHub
+1.1.10
+- Moved update location to GitHub SingleFile
+1.1.9
+- Merging SurfaceMods into master
+- Moved version info into Config class
+1.1.7.05
+- [Fixed] Power button wasn't suspending & pausing correctly
+1.1.7.04
+- [Fixed] F4 default hotkey sends F4 instead of special action
+1.1.7.03
+- [Added] RWin maps to RControl
+- Re-structured config class
+- [Changed] Max hotkey interval modified to improve performance
+1.1.7.02
+- [Added] Admin check
+- More sticky key fixes
+1.1.7.01
+- [Fixed] F4 hotkey now sends F4 by default & performs alternate on Fn+F4
+- Modified Delete sticky key code
+- SetBatchLines to -1 to help improve sticky keys
+1.1.8
+- [Added] Custom actions now working & configurable using Ctrl+Fn+Del
+- [Changed] Converted some config class settings to properties
+1.1.7
+- Re-structured Config class; changed naming of some class vars
+1.1.6
+- [Added] Tray menu item shows enabled/disabled & can be used to toggle applekeys on/off
+- Cleaned up code
+1.1.5
+- [Added] Ctrl+PrintScreen F3 hotkey
+1.1.4
+- [Fixed] Suspend icon issues
+1.1.3
+- Formatting changes
+1.1.2
+- [Fixed] Modifications to the suspend method
+- [Added] Alt+Power button = prompt to quit AppleKeys
+1.1.1
+- Updated to use a single global configuration object to track settings
+
+1.1.0
+- [Added] Hotkey for plus/minus key (mapped to `/~)
+- [Added] Hotkey for >/< key (mapped to Shift)
+- [Added] Customizable hotkey for Ctrl+Eject (defaults to edit the AppleKeys script if not defined in Registry)
+- [Added] New suspended state icon
+1.0.0
+- Initial Upload

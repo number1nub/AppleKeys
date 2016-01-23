@@ -4,11 +4,13 @@
 #HotkeyInterval,1
 DetectHiddenWindows, On
 SetBatchLines, -1
+SendMode, Input
 CheckAdmin()
 
-global cfg := new CConfig()
+global cfg:=new CConfig()
 
-TrayMenu(), CheckUpdate()
+TrayMenu()
+CheckUpdate()
 DllCall("GetRawInputDeviceList", UInt, 0, "UInt *", Count, UInt, cfg.HIDList_Size)
 VarSetCapacity(RawInputList, cfg.HIDList_Size*Count)
 DllCall("GetRawInputDeviceList", UInt, &RawInputList, "UInt *", Count, UInt, cfg.HIDList_Size)

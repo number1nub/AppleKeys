@@ -1,9 +1,13 @@
 MenuAction() {
-	if (A_ThisMenuItem ~= "(En|Dis)able " cfg.Name)
+	mi := StrReplace(A_ThisMenuItem, "&")
+	
+	if (mi ~= "(En|Dis)able " cfg.Name)
 		CheckSuspend()
-	else if (A_ThisMenuItem = "Reload") {
+	else if (mi = "Reload") {
 		cfg.Reset()
 		Reload
 		Pause
 	}
+	else if (mi = "Fix Sticky Keys")
+		SendInput, {Blind}{CtrlUp}{RControl Up}{ShiftUp}{AltUp}
 }
