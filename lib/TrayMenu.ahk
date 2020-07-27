@@ -3,23 +3,23 @@ TrayMenu(hideDef:="") {
 	
 	Menu, DefaultAHK, Standard
 	Menu, Tray, NoStandard
-	Menu, Tray, Add, % "Disable " cfg.Name, MenuAction
 	Menu, Tray, Add, Fix Sticky Keys, MenuAction
-	Menu, Tray, Default, % "Disable " cfg.Name
+	Menu, Tray, Add, % "Disable " cfg.Name, MenuAction
+	Menu, Tray, Default, Fix Sticky Keys
 	Menu, Tray, Add
 	Menu, Tray, Add, Check For Update, CheckForUpdate
+	Menu, Tray, Add,
+	Menu, Tray, Add, Reload, MenuAction
+	Menu, Tray, Add, Exit
 	if (!A_IsCompiled && !hideDef) {
 		Menu, Tray, Add
 		Menu, Tray, Add, Default AHK Menu, :DefaultAHK
 	}
-	Menu, Tray, Add,
-	Menu, Tray, Add, Reload, MenuAction
-	Menu, Tray, Add, Exit
 	
 	if (A_IsCompiled)
 		Menu, Tray, Icon, % A_ScriptFullpath, -159
 	else {
-		if (!FileExist(ico)) {
+		if (!FileExist(ico:=(A_ScriptDir "\" RegExReplace(A_ScriptName, "\.ahk$", ".ico")))) {
 			URLDownloadToFile, %icoUrl%, % (ico:=A_ScriptDir "\" cfg.Name ".ico")
 			if (ErrorLevel)
 				FileDelete, %ico%

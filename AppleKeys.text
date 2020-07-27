@@ -1,3 +1,6 @@
+1.2.0
+- [Fixed] Delete key no longer sticks. Removed ability to hold down Delete
+- "Fix Sticky Keys" is now the default tray menu item
 1.1.13
 - Added 'Fix Sticky Keys' menu command
 1.1.12
@@ -43,7 +46,6 @@
 - [Added] Alt+Power button = prompt to quit AppleKeys
 1.1.1
 - Updated to use a single global configuration object to track settings
-
 1.1.0
 - [Added] Hotkey for plus/minus key (mapped to `/~)
 - [Added] Hotkey for >/< key (mapped to Shift)
