@@ -43,7 +43,6 @@
 - [Added] Alt+Power button = prompt to quit AppleKeys
 1.1.1
 - Updated to use a single global configuration object to track settings
-
 1.1.0
 - [Added] Hotkey for plus/minus key (mapped to `/~)
 - [Added] Hotkey for >/< key (mapped to Shift)

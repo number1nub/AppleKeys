@@ -8,6 +8,8 @@ MenuAction() {
 		Reload
 		Pause
 	}
-	else if (mi = "Fix Sticky Keys")
-		SendInput, {Blind}{CtrlUp}{RControl Up}{ShiftUp}{AltUp}
+	else if (mi = "Fix Sticky Keys") {
+		UnStickKeys()
+		TrayTip, AppleKeys, Un Stuck!
+	}
 }

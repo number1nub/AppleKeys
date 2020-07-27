@@ -11,6 +11,7 @@ Class CConfig
 	static HIDList_Size     := 8
 	static RID_Size         := 12
 	static RIDInfo_Size     := 32
+	static _version         := ;auto_version
 	
 	__New() {
 		Gui, +ToolWindow +hwndHWND
@@ -30,7 +31,7 @@ Class CConfig
 	
 	Version[] {
 		get {
-			return ;auto_version
+			return this._version
 		}
 		set {
 			return
@@ -85,16 +86,15 @@ Class CConfig
 	
 	Reset() {
 		Suspend, Off
-		SendInput, {Blind}{CtrlUp}{RControl Up}{ShiftUp}{AltUp}{Delete Up}
 		for c, v in CConfig.KEY_STATES
 			this[v] := 0
 	}
 	
 	Suspend() {
-		SetTimer, SendDelete, Off
 		for c, v in CConfig.KEY_STATES
 			this[c] := 0
-		SendInput, {Blind}{CtrlUp}{AltUp}{RControl Up}{ShiftUp}
+		;~ SetTimer, SendDelete, Off
+		UnStickKeys()
 		this.IsSuspend := 1
 		Suspend, On
 	}

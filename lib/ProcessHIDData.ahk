@@ -1,7 +1,8 @@
 ProcessHIDData(wParam, lParam) {
 	static keyMsgs:={fnPressed:[0xFF10,0x1110], ejPressed:[0xFF08,0x1108], pwrPressed:[0xFF03,0x1303]}
 	
-	SetTimer, SendDelete, Off
+	;~ SetTimer, SendDelete, Off
+	;~ SendInput, {Delete Up} ;#[CHANGED: Added this here.. maybe getting stuck here?]
 	for c, v in keyMsgs
 		cfg[StrReplace(c,"Pressed","PrevState")]:=cfg[c], cfg[c]:=(v[1]&cfg.hidMessage=v[2])?1:0
 	
@@ -21,28 +22,33 @@ ProcessHIDData(wParam, lParam) {
 	}
 	;}
 	
+	
 	if (cfg.isSuspend)
 		return
 	
-	;{== Eject Pressed ==>>
+	
+	;{== Eject Pressed ==>> ;#[CHANGED: Also moved this up to make it quicker??]
 	if (cfg.ejPressed != cfg.ejPrevState) {
 		if (cfg.ejPressed) {
-			if (cfg.fnPressed)
+			if (cfg.fnPressed) {
 				SendInput, {Blind}^{Delete}
-			else {
+				;~ SetTimer, SendDelete, -250 ;#[CHANGED: Added this here because... it should be, right?]
+			} else {
 				SendInput, % "{Blind}" (GetMods()) "{Delete}"
-				SetTimer, SendDelete, -350	
+				;~ SetTimer, SendDelete, -250
 			}
 		}
 		else {
-			SetTimer, SendDelete, off
-			SendInput, {Blind}{Delete Up} 
+			;~ SetTimer, SendDelete, off
+			SendInput, {Blind}{Delete Up}
 		}
 	}
 	;}
 	
+	
 	;{== Fn Pressed ==>>
 	if (cfg.fnPressed != cfg.fnPrevState)
-		SendInput, % "{Blind}{RControl " (cfg.fnPressed ? "Down":"Up") "}"
+		SendInput, % "{Blind}{Control " (cfg.fnPressed ? "Down":"Up") "}"
+		;~ SendInput, % "{Blind}{Control " (cfg.fnPressed ? "Down":"Up") "}"
 	;}
 }

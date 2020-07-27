@@ -13,7 +13,7 @@ $!F3::
 hotkeyAltF3() {
 	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}!{PrintScreen}
-	else 
+	else
 		SendInput, {Blind}!{F3}
 }
 
@@ -22,7 +22,7 @@ $^F3::
 hotkeyCtrlF3() {
 	if (cfg.lctrlPressed && !cfg.ejPressed)
 		SendInput, {Blind}^{PrintScreen}
-	else 
+	else
 		SendInput, {Blind}^{F3}
 }
 
@@ -93,13 +93,13 @@ hotkeyF12() {
 
 
 ; Fn + Up ==>> Page Up
-$UP:: 
+$UP::
 hotkeyPgUp() {
 	if (cfg.lctrlPressed && !cfg.ejPressed) {
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{RControl Up}+{PgUp}
+			SendInput, {Blind}{Control Up}+{PgUp}
 		else
-			SendInput, {Blind}{RControl Up}{PgUp}
+			SendInput, {Blind}{Control Up}{PgUp}
 	}
 	else
 		SendInput, {Blind}{Up}
@@ -107,11 +107,11 @@ hotkeyPgUp() {
 
 ; Fn + Down ==>> Page Down
 $Down::
-hotkeyPgDn() { 
+hotkeyPgDn() {
 	if (cfg.lctrlPressed && cfg.fnPressed && !cfg.ejPressed)
-		SendInput, {Blind}{RControl Up}^{PgDn}
+		SendInput, {Blind}{Control Up}^{PgDn}
 	else if (cfg.lctrlPressed && !cfg.fnPressed && !cfg.ejPressed)
-		SendInput, {Blind}{RControl Up}{PgDn}
+		SendInput, {Blind}{Control Up}{PgDn}
 	else
 		SendInput, {Blind}{Down}
 }
@@ -123,15 +123,15 @@ hotkeyHome() {
 	mods := GetMods()
 	if (cfg.lctrlPressed && !cfg.fnPressed && !cfg.ejPressed){
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{RControl Up}+{Home}
+			SendInput, {Blind}{Control Up}+{Home}
 		else
-			sendinput, {Blind}{RControl Up}{Home}
+			sendinput, {Blind}{Control Up}{Home}
 	}
 	else if (cfg.lctrlPressed && cfg.fnPressed && !cfg.ejPressed){
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{RControl Up}^+{Home}
+			SendInput, {Blind}{Control Up}^+{Home}
 		else
-			SendInput, {Blind}{RControl Up}^{Home}
+			SendInput, {Blind}{Control Up}^{Home}
 	}
 	else
 		SendInput, {Blind}%mods%{Left}
@@ -144,15 +144,15 @@ hotkeyEnd() {
 	mods := GetMods()
 	if (cfg.lctrlPressed && !cfg.fnPressed && !cfg.ejPressed){
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{RControl Up}+{End}
+			SendInput, {Blind}{Control Up}+{End}
 		else
-			SendInput, {Blind}{RControl Up}{End}
+			SendInput, {Blind}{Control Up}{End}
 	}
 	else if (cfg.lctrlPressed && cfg.fnPressed && !cfg.ejPressed){
 		if (GetKeyState("Shift"))
-			SendInput, {Blind}{RControl Up}^+{End}
+			SendInput, {Blind}{Control Up}^+{End}
 		else
-			SendInput, {Blind}{RControl Up}^{End}
+			SendInput, {Blind}{Control Up}^{End}
 	}
 	else
 		SendInput, {Blind}%mods%{Right}
@@ -160,12 +160,15 @@ hotkeyEnd() {
 
 
 ; Send Delete keystroke repeatedly while Eject still pressed
-SendDelete:
-if (cfg.ejPressed) {
-	SendInput, {Blind}{Delete}
-	SetTimer, SendDelete, -75
-}
-return
+;~ SendDelete:
+;~ if (cfg.ejPressed) {
+	;~ SendInput, {Blind}{Delete}
+	;~ SetTimer, SendDelete, -75
+	;~ return
+;~ }
+;~ SetTimer, SendDelete, Off
+;~ SendInput, {Delete Up}
+;~ return
 
 
 ; LCtrl ==>> Fn
@@ -179,7 +182,7 @@ hotkeyLCtrlUp() {
 $*LControl::
 hotkeyLCtrlDn() {
 	cfg.lctrlPressed := 1
-	SetTimer, SendDelete, Off
+	;~ SetTimer, SendDelete, Off ;#[CHANGED: Not sure this should be here...]
 	SendInput, {F24 down}
 }
 
@@ -190,5 +193,14 @@ VKE2::VKC0
 VKC0::LShift
 
 
-; RWin ==> RControl
-RWin::RControl
+; RWin ==> Control
+RWin::Control
+
+
+; Allow using the Right Alt key as a FN key for volume
+#IfWinNotActive, ahk_class XLMAIN
+>!F10::SendInput, {Blind}{Volume_Mute}
+>!F11::SendInput, {Blind}{Volume_Down}
+>!F12::SendInput, {Blind}{Volume_Up}
+
+#IfWinActive,
