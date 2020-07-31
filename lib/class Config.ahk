@@ -11,14 +11,24 @@ Class CConfig
 	static HIDList_Size     := 8
 	static RID_Size         := 12
 	static RIDInfo_Size     := 32
+	static _iconName        := "AppleKeys.ico"
+	static _suspendIconName := "AppleKeys-Suspend.ico"
+	static _icoRootUrl      := "http://files.wsnhapps.com/AppleKeys/"
 	static _version         := ;auto_version
+	_isSuspend    := false
+	_isRegistered := false
+	_hwnd         := ""
+	
 	
 	__New() {
-		Gui, +ToolWindow +hwndHWND
+		Gui, +ToolWindow +hwndMyHWND
 		Gui, Show, x0 y0 h0 w0, AppleKeysHelper
-		this.HWND := HWND
+		this._hwnd := MyHWND
 		this.Reset()
 	}
+	
+	
+	;{------------- PROPERTIES ---------->>>
 	
 	Name[] {
 		get {
@@ -38,30 +48,66 @@ Class CConfig
 		}
 	}
 	
-	IsSuspend[] {
+	IconName[] {
 		get {
-			return this._IsSuspend
+			return this._iconName
 		}
 		set {
-			return this._IsSuspend := value
+			return
+		}
+	}
+	
+	IconUrl[] {
+		get {
+			return (this._icoRootUrl this._iconName)
+		}
+		set {
+			return
+		}
+	}
+	
+	SuspendIconName[] {
+		get {
+			return this._suspendIconName
+		}
+		set {
+			return
+		}
+	}
+	
+	SuspendIconUrl[] {
+		get {
+			(this._icoRootUrl this._suspendIconName)
+		}
+		set {
+			return
+		}
+	}
+	
+	IsSuspend[] {
+		get {
+			return this._isSuspend
+		}
+		set {
+			return this._isSuspend := value
 		}
 	}
 	
 	IsRegistered[] {
 		get {
-			return this._IsRegistered
+			return this._isRegistered
 		}
 		set {
-			return this._IsRegistered := value
+			return this._isRegistered := value
 		}
 	}
 	
 	HWND[] {
 		get {
-			return this._HWND
+			return this._hwnd
 		}
 		set {
-			return this._HWND := value
+			return
 		} 
 	}
 	
@@ -75,17 +121,22 @@ Class CConfig
 						return
 					RegWrite, REG_SZ, HKCU, % cfg.REG_PATH, ejCmd, %curAct%
 				}
+				this._CAction := curAct
 			}
-			return this._CAction := curAct
+			return this._CAction
 		}
 		set {
 			RegWrite, REG_SZ, HKCU, % this.REG_PATH, ejCmd, %value%
 			return (this._CAction := value)
 		}
 	}
+	;}<<<---------- PROPERTIES -------------
+	
 	
 	Reset() {
 		Suspend, Off
+		if (FileExist(ico:=(A_ScriptDir "\" this._iconName))) 
+			Menu, Tray, Icon, %ico%,, 1
 		for c, v in CConfig.KEY_STATES
 			this[v] := 0
 	}
@@ -96,5 +147,7 @@ Class CConfig
 		UnStickKeys()
 		this.IsSuspend := 1
 		Suspend, On
+		if (FileExist(ico:=(A_ScriptDir "\" this._suspendIconName))) 
+			Menu, Tray, Icon, %ico%,, 1
 	}
 }
