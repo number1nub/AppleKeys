@@ -1,6 +1,4 @@
-TrayMenu(hideDef:="") {
-	static icoUrl:="http://files.wsnhapps.com/AppleKeys/AppleKeys.ico"
-	
+TrayMenu(hideDef:="") {	
 	Menu, DefaultAHK, Standard
 	Menu, Tray, NoStandard
 	Menu, Tray, Add, Fix Sticky Keys, MenuAction
@@ -17,14 +15,20 @@ TrayMenu(hideDef:="") {
 	}
 	
 	if (A_IsCompiled)
-		Menu, Tray, Icon, % A_ScriptFullpath, -159
+		Menu, Tray, Icon, % A_ScriptFullpath, -159, 1
 	else {
-		if (!FileExist(ico:=(A_ScriptDir "\" RegExReplace(A_ScriptName, "\.ahk$", ".ico")))) {
-			URLDownloadToFile, %icoUrl%, % (ico:=A_ScriptDir "\" cfg.Name ".ico")
+		if (!FileExist(ico:=(A_ScriptDir "\" cfg.IconName))) {
+			URLDownloadToFile, % cfg.IconUrl, %ico%
 			if (ErrorLevel)
 				FileDelete, %ico%
 		}
-		Menu, Tray, Icon, % FileExist(ico) ? ico : ""
+		Menu, Tray, Icon, % FileExist(ico) ? ico : "",, 1
+	}
+	
+	if (!FileExist(sIco:=(A_ScriptDir "\" cfg.SuspendIconName))) {
+		URLDownloadToFile, % cfg.SuspendIconUrl, %sIco%
+		if (ErrorLevel) 
+			FileDelete, %sIco%
 	}
 	
 	Menu, Tray, Tip, % cfg.Name (A_IsAdmin ? " (Admin)":"") (cfg.Version ? " v" cfg.Version:"") " Running..."
