@@ -6,7 +6,7 @@ DetectHiddenWindows, On
 SetBatchLines, -1
 SendMode, Input
 CheckAdmin()
-OnExit("Exit") ;#[CHANGED: Added this to ensure UnStickKeys is called]
+OnExit("Exit")
 
 global cfg:=new CConfig()
 

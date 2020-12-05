@@ -14,9 +14,9 @@ Class CConfig
 	static _iconName        := "AppleKeys.ico"
 	static _suspendIconName := "AppleKeys-Suspend.ico"
 	static _icoRootUrl      := "http://files.wsnhapps.com/AppleKeys/"
-	static _version         := ;auto_version
+	static _version         := ";auto_version"
 	_isSuspend    := false
-	_isRegistered := false
+	_isRegistered := falses
 	_hwnd         := ""
 	
 	
@@ -29,107 +29,107 @@ Class CConfig
 	
 	
 	;{------------- PROPERTIES ---------->>>
-	
-	Name[] {
-		get {
-			return RegExReplace(A_ScriptName, "i)\.ahk|exe$")
-		}
-		set {
-			return
-		}
-	}
-	
-	Version[] {
-		get {
-			return this._version
-		}
-		set {
-			return
-		}
-	}
-	
-	IconName[] {
-		get {
-			return this._iconName
-		}
-		set {
-			return
-		}
-	}
-	
-	IconUrl[] {
-		get {
-			return (this._icoRootUrl this._iconName)
-		}
-		set {
-			return
-		}
-	}
-	
-	SuspendIconName[] {
-		get {
-			return this._suspendIconName
-		}
-		set {
-			return
-		}
-	}
-	
-	SuspendIconUrl[] {
-		get {
-			(this._icoRootUrl this._suspendIconName)
-		}
-		set {
-			return
-		}
-	}
-	
-	IsSuspend[] {
-		get {
-			return this._isSuspend
-		}
-		set {
-			return this._isSuspend := value
-		}
-	}
-	
-	IsRegistered[] {
-		get {
-			return this._isRegistered
-		}
-		set {
-			return this._isRegistered := value
-		}
-	}
-	
-	HWND[] {
-		get {
-			return this._hwnd
-		}
-		set {
-			return
-		} 
-	}
-	
-	CAction[] {
-		get {
-			if (!this._CAction) {
-				RegRead, curAct, HKCU, % cfg.REG_PATH, ejCmd
-				if (!curAct || ErrorLevel) {
-					InputBox, curAct, Custom Action, Custom Action:,, 550, 130,,,,, % (ErrorLevel||!curAct) ? "" : curAct
-					if (ErrorLevel || !curAct)
-						return
-					RegWrite, REG_SZ, HKCU, % cfg.REG_PATH, ejCmd, %curAct%
-				}
-				this._CAction := curAct
+		
+		Name[] {
+			get {
+				return RegExReplace(A_ScriptName, "i)\.ahk|exe$")
 			}
-			return this._CAction
+			set {
+				return
+			}
 		}
-		set {
-			RegWrite, REG_SZ, HKCU, % this.REG_PATH, ejCmd, %value%
-			return (this._CAction := value)
+		
+		Version[] {
+			get {
+				return this._version
+			}
+			set {
+				return
+			}
 		}
-	}
+		
+		IconName[] {
+			get {
+				return this._iconName
+			}
+			set {
+				return
+			}
+		}
+		
+		IconUrl[] {
+			get {
+				return (this._icoRootUrl this._iconName)
+			}
+			set {
+				return
+			}
+		}
+		
+		SuspendIconName[] {
+			get {
+				return this._suspendIconName
+			}
+			set {
+				return
+			}
+		}
+		
+		SuspendIconUrl[] {
+			get {
+				(this._icoRootUrl this._suspendIconName)
+			}
+			set {
+				return
+			}
+		}
+		
+		IsSuspend[] {
+			get {
+				return this._isSuspend
+			}
+			set {
+				return this._isSuspend := value
+			}
+		}
+		
+		IsRegistered[] {
+			get {
+				return this._isRegistered
+			}
+			set {
+				return this._isRegistered := value
+			}
+		}
+		
+		HWND[] {
+			get {
+				return this._hwnd
+			}
+			set {
+				return
+			} 
+		}
+		
+		CAction[] {
+			get {
+				if (!this._CAction) {
+					RegRead, curAct, HKCU, % cfg.REG_PATH, ejCmd
+					if (!curAct || ErrorLevel) {
+						InputBox, curAct, Custom Action, Custom Action:,, 550, 130,,,,, % (ErrorLevel||!curAct) ? "" : curAct
+						if (ErrorLevel || !curAct)
+							return
+						RegWrite, REG_SZ, HKCU, % cfg.REG_PATH, ejCmd, %curAct%
+					}
+					this._CAction := curAct
+				}
+				return this._CAction
+			}
+			set {
+				RegWrite, REG_SZ, HKCU, % this.REG_PATH, ejCmd, %value%
+				return (this._CAction := value)
+			}
+		}
 	;}<<<---------- PROPERTIES -------------
 	
 	

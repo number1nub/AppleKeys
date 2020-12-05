@@ -13,7 +13,7 @@ TrayMenu(hideDef:="") {
 		Menu, Tray, Add
 		Menu, Tray, Add, Default AHK Menu, :DefaultAHK
 	}
-	
+	;Main Icon
 	if (A_IsCompiled)
 		Menu, Tray, Icon, % A_ScriptFullpath, -159, 1
 	else {
@@ -24,12 +24,12 @@ TrayMenu(hideDef:="") {
 		}
 		Menu, Tray, Icon, % FileExist(ico) ? ico : "",, 1
 	}
-	
+	;Suspend Icon
 	if (!FileExist(sIco:=(A_ScriptDir "\" cfg.SuspendIconName))) {
-		URLDownloadToFile, % cfg.SuspendIconUrl, %sIco%
-		if (ErrorLevel) 
-			FileDelete, %sIco%
+		try
+			URLDownloadToFile, % cfg._icoRootUrl cfg.SuspendIconName, %sIco%
+		catch e 
+			m("ico:!", e.message, e.what, e.extra)
 	}
-	
 	Menu, Tray, Tip, % cfg.Name (A_IsAdmin ? " (Admin)":"") (cfg.Version ? " v" cfg.Version:"") " Running..."
 }

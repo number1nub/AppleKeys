@@ -1,5 +1,7 @@
 
 backup/
 AHK-Studio Backup/
+build/
+
 *.ico
 *.exe
