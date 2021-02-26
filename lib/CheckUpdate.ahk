@@ -6,7 +6,7 @@ CheckUpdate(_ReplaceCurrentScript:=1, _SuppressMsgBox:=0, _CallbackFunction:="",
 	Static Update_URL   := "http://files.wsnhapps.com/AppleKeys/AppleKeys.text"
 		 , Download_URL := "http://files.wsnhapps.com/AppleKeys/AppleKeys.ahk"
 		 , Retry_Count  := 2
-		 , Version      := ;auto_version
+		 , Version      := cfg.Version
 	
 	if (!Version)
 		return

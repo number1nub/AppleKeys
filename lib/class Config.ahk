@@ -135,7 +135,9 @@ Class CConfig
 	
 	Reset() {
 		Suspend, Off
-		if (FileExist(ico:=(A_ScriptDir "\" this._iconName))) 
+		if (A_IsCompiled)
+			Menu, Tray, Icon, %A_ScriptFullPath%, -159
+		else if (FileExist(ico:=(A_ScriptDir "\" this._iconName))) 
 			Menu, Tray, Icon, %ico%,, 1
 		for c, v in CConfig.KEY_STATES
 			this[v] := 0
@@ -147,7 +149,7 @@ Class CConfig
 		UnStickKeys()
 		this.IsSuspend := 1
 		Suspend, On
-		if (FileExist(ico:=(A_ScriptDir "\" this._suspendIconName))) 
+		if (FileExist(ico:=(A_ScriptDir "\" this._suspendIconName)))
 			Menu, Tray, Icon, %ico%,, 1
 	}
 }
