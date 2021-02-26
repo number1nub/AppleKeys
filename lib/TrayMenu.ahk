@@ -31,5 +31,5 @@ TrayMenu(hideDef:="") {
 		catch e 
 			m("ico:!", e.message, e.what, e.extra)
 	}
-	Menu, Tray, Tip, % cfg.Name (A_IsAdmin ? " (Admin)":"") (cfg.Version ? " v" cfg.Version:"") " Running..."
+	Menu, Tray, Tip, % cfg.Name " " cfg.Version " Running" (A_IsAdmin ? " as Admin":"")
 }

@@ -14,7 +14,6 @@ Class CConfig
 	static _iconName        := "AppleKeys.ico"
 	static _suspendIconName := "AppleKeys-Suspend.ico"
 	static _icoRootUrl      := "http://files.wsnhapps.com/AppleKeys/"
-	static _version         := ";auto_version"
 	_isSuspend    := false
 	_isRegistered := falses
 	_hwnd         := ""
@@ -41,7 +40,8 @@ Class CConfig
 		
 		Version[] {
 			get {
-				return this._version
+				FileGetVersion, ver, %A_ScriptFullPath%
+				return (ver && !ErrorLevel) ? RegExReplace(ver, "(.+?)\s*\.\d+$", "$1") : "Beta"
 			}
 			set {
 				return
